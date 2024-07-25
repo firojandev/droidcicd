@@ -5,5 +5,5 @@ Release apk through CI/CD sample
    example:base64 /Volumes/Files/Altaf.SIL/2023/apks/rnd/certificatescr.jks > certificatescr.jks.base64
    
 2. Go to your GitHub repository.
-   Navigate to Settings > Secrets and variables > Actions. and pu  there ANDROID_KEYSTORE
+   Navigate to Settings > Secrets and variables > Actions. and put there ANDROID_KEYSTORE
    STORE_PASSWORD,KEY_PASSWORD & alias

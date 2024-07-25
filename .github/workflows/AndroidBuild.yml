@@ -33,7 +33,7 @@ jobs:
           echo "storeFile=keystore.jks" >> key.properties
 
       - name: Download Keystore
-        run: echo "${{ secrets.ANDROID_KEYSTORE }}" | base64 --decode > keystore.jks
+        run: echo "${{ secrets.ANDROID_KEYSTORE }}" | base64 --decode > app/keystore.jks
 
       - name: Build Release APK
         run: ./gradlew assembleRelease
@@ -41,5 +41,5 @@ jobs:
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
-          name: droidcicd-1.0.0.apk
+          name: AndroidReleaseCICD-1.0.0.apk
           path: app/build/outputs/apk/release/app-release.apk
