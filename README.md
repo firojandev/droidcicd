@@ -1,0 +1,1 @@
+Release apk through CI/CD sample
