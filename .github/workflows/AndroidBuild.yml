@@ -2,7 +2,8 @@ name: Android Build
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - release/**
 
 jobs:
   build:
@@ -24,14 +25,21 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
-      - name: Install Dependencies
-        run: ./gradlew dependencies
+      - name: Create key.properties
+        run: |
+          echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> key.properties
+          echo "storeFile=keystore.jks" >> key.properties
 
-      - name: Build with Gradle
-        run: ./gradlew assembleDebug
+      - name: Download Keystore
+        run: echo "${{ secrets.ANDROID_KEYSTORE }}" | base64 --decode > keystore.jks
 
-      - name: Upload a Build Artifact
+      - name: Build Release APK
+        run: ./gradlew assembleRelease
+
+      - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
-          name: AndroidCICD.apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: AndroidReleaseCICD.apk
+          path: app/build/outputs/apk/release/app-release.apk
